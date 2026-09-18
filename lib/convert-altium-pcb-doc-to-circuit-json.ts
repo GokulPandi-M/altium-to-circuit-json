@@ -34,7 +34,7 @@ import type {
 import { convertAltiumCopperAreas } from "./pcb/convert-altium-copper-areas"
 import { getPreferredPcbBoardOutline } from "./pcb/get-board-outline"
 import { mapAltiumCopperLayer } from "./pcb/map-altium-copper-layer"
-import { resolveAltiumComponentSpecialStrings } from "./pcb/resolve-altium-component-special-strings"
+import { resolveAltiumDesignator } from "./pcb/resolve-altium-designator"
 import { stitchConnectedAltiumPaths } from "./pcb/stitch-connected-paths"
 
 const MILS_TO_MILLIMETERS = 0.0254
@@ -151,11 +151,7 @@ export function convertAltiumPcbDocToCircuitJson(
       if (text) {
         elements.push({
           ...text,
-          text: resolveAltiumComponentSpecialStrings({
-            document,
-            record,
-            sourceText: text.text,
-          }),
+          text: resolveAltiumDesignator(document, record, text.text),
         })
       }
     }
